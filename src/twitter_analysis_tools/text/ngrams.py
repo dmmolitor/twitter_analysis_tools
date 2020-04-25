@@ -28,7 +28,7 @@ def get_ngrams(max_len, tokens, delimiter=" "):
         ...                    ["d", "e", "f"]])
         >>> from functools import partial
         >>> ngrams_gen = map(partial(get_ngrams, 2), tokens_gen)
-        >>> from covid19.utils import listify_nested_iterables
+        >>> from twitter_analysis_tools.utils import listify_nested_iterables
         >>> listify_nested_iterables(ngrams_gen)
         [['a', 'b', 'c', 'a b', 'b c'], ['d', 'e', 'f', 'd e', 'e f']]
     """

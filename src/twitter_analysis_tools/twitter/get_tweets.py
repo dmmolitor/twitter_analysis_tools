@@ -1,8 +1,8 @@
 """Iterables for streaming tweets from files."""
 
-from covid19.fileio import LinesFromGzipFiles
-from covid19.twitter import clean_text, tweet_info
-from covid19.utils import Pipeline, negate
+from twitter_analysis_tools.fileio import LinesFromGzipFiles
+from twitter_analysis_tools.twitter import clean_text, tweet_info
+from twitter_analysis_tools.utils import Pipeline, negate
 
 
 class TweetsFromFiles(Pipeline):
@@ -15,7 +15,7 @@ class TweetsFromFiles(Pipeline):
         dict: Tweet object.
 
     Notes:
-        See `covid19.utils.Pipeline` for more details.
+        See `twitter_analysis_tools.utils.Pipeline` for more details.
     """
 
     def __init__(self, *filepaths):

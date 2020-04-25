@@ -1,9 +1,10 @@
 from functools import partial
 
-# Local imports.
-from covid19.twitter import clean_text, get_tweets, tweet_info
-from covid19.utils import Pipeline, negate
 from scipy.sparse import csr_matrix
+
+# Local imports.
+from twitter_analysis_tools.twitter import clean_text, get_tweets, tweet_info
+from twitter_analysis_tools.utils import Pipeline, negate
 
 
 def get_bag_of_words_per_file(filepaths, include_retweets, vectorizer):

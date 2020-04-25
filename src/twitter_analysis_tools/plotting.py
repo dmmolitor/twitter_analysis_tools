@@ -51,7 +51,7 @@ def plot_data(
 
         >>> import numpy as np
         >>> from functools import partial
-        >>> from covid19.utils import Pipeline
+        >>> from twitter_analysis_tools.utils import Pipeline
         >>> data = [i*np.arange(10).T for i in range(1, 20)]
         >>> data_pipeline = Pipeline(data)
         >>> data_pipeline = data_pipeline.add_map(partial(np.expand_dims, axis=1))

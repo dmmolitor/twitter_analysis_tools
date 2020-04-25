@@ -92,7 +92,7 @@ def is_retweet(tweet):
         tweets you can do that like this:
 
         >>> tweets = [tweet1, tweet2]
-        >>> from covid19.utils import negate
+        >>> from twitter_analysis_tools.utils import negate
         >>> list(filter(negate(is_retweet), tweets))
         [{'full_text': '...'}]
     """

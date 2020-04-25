@@ -1,6 +1,6 @@
 import os
 
-from covid19.twitter.get_tweets import TweetsFromFiles
+from twitter_analysis_tools.twitter.get_tweets import TweetsFromFiles
 
 
 def test_tweets_from_files(datadir):

@@ -1,6 +1,6 @@
 import os
 
-from covid19.twitter import common_pipelines
+from twitter_analysis_tools.twitter import common_pipelines
 
 
 def test_get_tweet_text(datadir):

@@ -1,6 +1,6 @@
 import os
 
-from covid19.fileio import LinesFromGzipFiles
+from twitter_analysis_tools.fileio import LinesFromGzipFiles
 
 
 def test_iter_lines_from_gzip_files(datadir):

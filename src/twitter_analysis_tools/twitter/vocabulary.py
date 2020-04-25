@@ -6,10 +6,11 @@ import re  # For regex.
 from collections import Counter
 from functools import partial
 
-# Local imports.
-from covid19.text import ngrams, stopwords
-from covid19.twitter import common_pipelines, file_mgmt
 from nltk.tokenize import TweetTokenizer
+
+# Local imports.
+from twitter_analysis_tools.text import ngrams, stopwords
+from twitter_analysis_tools.twitter import common_pipelines, file_mgmt
 
 
 def get_vocab_file_substring(include_retweets, max_ngram_len):
