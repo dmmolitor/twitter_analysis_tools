@@ -35,6 +35,7 @@ requirements = [
     "matplotlib>=3.2.1",
     "seaborn>=0.10.0",
     "demoji==0.2.1",
+    "scipy>=1.4.1",
 ]
 
 extra_requirements = {

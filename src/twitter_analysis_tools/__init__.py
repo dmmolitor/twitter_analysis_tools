@@ -11,4 +11,4 @@ __license__ = "MIT"
 __copyright__ = "Copyright (c) 2020, Denali Molitor"
 
 # flake8: noqa: F402
-from . import fileio, online_nmf, text, twitter, utils
+from . import fileio, text, twitter, utils
