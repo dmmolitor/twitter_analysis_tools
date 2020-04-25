@@ -7,6 +7,8 @@
 
 ---
 
+For analyzing twitter data.
+
 ## Installation
 
 To install twitter_analysis_tools, run this command in your terminal:
@@ -20,13 +22,52 @@ This is the preferred method to install twitter_analysis_tools, as it will alway
 If you don't have [pip](https://pip.pypa.io) installed, these [installation instructions](http://docs.python-guide.org/en/latest/starting/installation/) can guide
 you through the process.
 
-## Quick Start
-```python
->>> from twitter_analysis_tools import Example
->>> a = Example()
->>> a.get_value()
-10
+## Usage
+To load tweets from files, the tweets are assumed to be saved as compressed json lines (file type `jsonl.gz`).
 
+We highlight several generally useful tools here.
+
+### Pipelines
+The Pipeline class of pipeline.py is the primary interface for working with tweets and derived information. Each instance of the pipeline class has a data stream and steps to be applied to that data stream.
+
+The file `twitter.common_pipelines.py` contains pre built pipelines for convenience including
+* get_tweet_text_pipeline: from a generator of filepaths, return a pipeline that yields text from the tweets contained in those files.
+* get_bag_of_words_per_file: form a pipeline of bag_of_words representaions of tweets for each file in filepaths.
+
+### Getting tweets from files
+The following code creates a pipeline of tweets from the files indicated in filepaths.
+```python
+import twitter.get_tweets
+filepaths = ["tweets1.jsonl.gz", "tweets2.jsonl.gz"]
+tweets = get_tweets.TweetsFromFiles(*filepaths)
+```
+
+Alternatively, we can have a stream of filepaths and get the tweets for each file. This is useful if we want to keep the tweets from each file separate.
+```python
+import twitter.get_tweets
+tweet_files_pipeline = Pipeline(filepaths, precompute_len=True)
+tweet_files_pipeline.add_map(get_tweets.TweetsFromFiles)
+```
+
+### Getting text from tweets
+Given a tweet object, the following will extract the text from the tweet
+```python
+import twitter.tweet_info
+tweet_text = tweet_info.get_full_text(tweet)
+```
+
+Given a generator `tweets` of tweets, the following will return a generator that extract the text from each tweet, filter out english tweets, remove links, user tags and optionally exclude retweets
+```python
+import twitter.get_tweets
+get_tweets.text_from_tweets(tweets, include_retweets=True)
+```
+
+One can also get a pipeline of tweet text from a list of filepaths
+```python
+import twitter.common_pipelines
+filepaths = ["tweets1.jsonl.gz", "tweets2.jsonl.gz"]
+include_retweets = True
+get_tweet_text_pipeline(filepaths, include_retweets)
 ```
 
 ## Citing
