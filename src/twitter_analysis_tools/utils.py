@@ -1,8 +1,15 @@
 """Utility functions not related to any particular module."""
+import sys
 from collections.abc import Iterable
-from functools import cached_property, wraps
+from functools import wraps
 
 import numpy as np
+
+# flake8: noqa: F401
+if sys.version_info >= (3, 8):
+    from functools import cached_property
+else:
+    from lazy_property import LazyProperty as cached_property
 
 
 class Pipeline:
