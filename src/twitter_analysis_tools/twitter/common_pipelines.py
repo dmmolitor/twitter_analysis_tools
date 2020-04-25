@@ -43,7 +43,7 @@ def get_tweet_text_pipeline(filepaths, include_retweets):
     Returns:
         Pipeline: iterable with text from English tweets.
     """
-    tweet_text_pipeline = get_tweets.TweetsFromFiles(filepaths)
+    tweet_text_pipeline = get_tweets.TweetsFromFiles(*filepaths)
 
     # Only keep English tweets.
     tweet_text_pipeline.add_filter(tweet_info.is_english)
