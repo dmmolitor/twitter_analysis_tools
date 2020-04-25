@@ -10,5 +10,5 @@ __email__ = "dmolitor14@gmail.com"
 __license__ = "MIT"
 __copyright__ = "Copyright (c) 2020, Denali Molitor"
 
-
-from .example import Example  # noqa: F401
+# flake8: noqa: F402
+from . import fileio, online_nmf, text, twitter, utils

@@ -26,7 +26,16 @@ dev_requirements = [
     "wheel>=0.33.1",
 ]
 
-requirements = []
+requirements = [
+    "tqdm>=4.45.0",
+    "numpy>=1.18.2",
+    "nltk>=3.4.5",
+    "scikit-learn>=0.22.2.post1",
+    "loguru>=0.4.1",
+    "matplotlib>=3.2.1",
+    "seaborn>=0.10.0",
+    "demoji==0.2.1",
+]
 
 extra_requirements = {
     "test": test_requirements,
