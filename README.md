@@ -3,7 +3,11 @@
 [![PyPI Version](https://img.shields.io/pypi/v/twitter-analysis-tools.svg)](https://pypi.org/project/twitter-analysis-tools/)
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/twitter-analysis-tools.svg)](https://pypi.org/project/twitter-analysis-tools/)
 [![Build Status](https://github.com/dmmolitor/twitter-analysis-tools/workflows/CI/badge.svg)](https://github.com/dmmolitor/twitter-analysis-tools/actions)
-[![Documentation](https://readthedocs.org/projects/twitter-analysis-tools/badge/?version=stable)](https://twitter-analysis-tools.readthedocs.io/en/stable/?badge=stable) [![Code Coverage](https://codecov.io/gh/dmmolitor/twitter-analysis-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/dmmolitor/twitter-analysis-tools)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)Tools for mloading, manipulating and filtering g tweets.
+[![Documentation](https://readthedocs.org/projects/twitter-analysis-tools/badge/?version=stable)](https://twitter-analysis-tools.readthedocs.io/en/stable/?badge=stable)
+[![Code Coverage](https://codecov.io/gh/dmmolitor/twitter-analysis-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/dmmolitor/twitter-analysis-tools)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+Tools for loading, manipulating and filtering tweets.
 
 ---
 
@@ -22,6 +26,10 @@ This is the preferred method to install twitter_analysis_tools, as it will alway
 If you don't have [pip](https://pip.pypa.io) installed, these [installation instructions](http://docs.python-guide.org/en/latest/starting/installation/) can guide
 you through the process.
 
+## Citing
+If you use our work in an academic setting, please cite our paper:
+
+
 ## Usage
 To load tweets from files, the tweets are assumed to be saved as compressed json lines (file type `jsonl.gz`).
 
@@ -30,49 +38,67 @@ We highlight several generally useful tools here.
 ### Pipelines
 The Pipeline class of pipeline.py is the primary interface for working with tweets and derived information. Each instance of the pipeline class has a data stream and steps to be applied to that data stream.
 
-The file `twitter.common_pipelines.py` contains pre built pipelines for convenience including
+The file `twitter_analysis_tools.twitter.common_pipelines.py` contains pre built pipelines for convenience including
 * get_tweet_text_pipeline: from a generator of filepaths, return a pipeline that yields text from the tweets contained in those files.
 * get_bag_of_words_per_file: form a pipeline of bag_of_words representaions of tweets for each file in filepaths.
+
+### Imports and example data
+The following will be used for the remaining examples.
+```python
+>>> from twitter_analysis_tools.twitter import get_tweets, tweet_info, common_pipelines
+>>> from twitter_analysis_tools.utils import Pipeline
+>>> from functional import seq
+>>> texts = ["Hello my friend, how are you?", "My dog ate my homework. Sorry it is late."]
+>>> filepaths = ["test_tweets1.jsonl.gz", "test_tweets2.jsonl.gz"]
+>>> for text, filepath in zip(texts, filepaths):
+...     tweet = {"full_text": text, "lang": "en"}
+...     seq([tweet]).to_jsonl(filepath, 'wb', compression='gzip')
+
+```
 
 ### Getting tweets from files
 The following code creates a pipeline of tweets from the files indicated in filepaths.
 ```python
-import twitter.get_tweets
-filepaths = ["tweets1.jsonl.gz", "tweets2.jsonl.gz"]
-tweets = get_tweets.TweetsFromFiles(*filepaths)
+>>> tweets = get_tweets.TweetsFromFiles(*filepaths)
+>>> list(tweets)
+[{'full_text': 'Hello my friend, how are you?', 'lang': 'en'}, {'full_text': 'My dog ate my homework. Sorry it is late.', 'lang': 'en'}]
+
 ```
 
 Alternatively, we can have a stream of filepaths and get the tweets for each file. This is useful if we want to keep the tweets from each file separate.
 ```python
-import twitter.get_tweets
-tweet_files_pipeline = Pipeline(filepaths, precompute_len=True)
-tweet_files_pipeline.add_map(get_tweets.TweetsFromFiles)
+>>> tweet_files_pipeline = Pipeline(filepaths, precompute_len=True)
+>>> tweet_files_pipeline = tweet_files_pipeline.add_map(get_tweets.TweetsFromFiles)
+>>> for tweet_file in tweet_files_pipeline:
+...     print(list(tweet_file))
+[{'full_text': 'Hello my friend, how are you?', 'lang': 'en'}]
+[{'full_text': 'My dog ate my homework. Sorry it is late.', 'lang': 'en'}]
+
 ```
 
 ### Getting text from tweets
 Given a tweet object, the following will extract the text from the tweet
 ```python
-import twitter.tweet_info
-tweet_text = tweet_info.get_full_text(tweet)
+>>> tweet_info.get_full_text({'full_text': 'Hello my friend, how are you?'})
+'Hello my friend, how are you?'
+
 ```
 
 Given a generator `tweets` of tweets, the following will return a generator that extract the text from each tweet, filter out english tweets, remove links, user tags and optionally exclude retweets
 ```python
-import twitter.get_tweets
-get_tweets.text_from_tweets(tweets, include_retweets=True)
+>>> tweets = [{'full_text': 'Hello my friend, how are you?', 'lang': 'en'}, {'full_text': 'My dog ate my homework. Sorry it is late.', 'lang': 'en'}]
+>>> list(get_tweets.text_from_tweets(tweets, include_retweets=True))
+['Hello my friend, how are you?', 'My dog ate my homework. Sorry it is late.']
+
 ```
 
 One can also get a pipeline of tweet text from a list of filepaths
 ```python
-import twitter.common_pipelines
-filepaths = ["tweets1.jsonl.gz", "tweets2.jsonl.gz"]
-include_retweets = True
-get_tweet_text_pipeline(filepaths, include_retweets)
+>>> include_retweets = True
+>>> list(common_pipelines.get_tweet_text_pipeline(filepaths, include_retweets))
+['Hello my friend, how are you?', 'My dog ate my homework. Sorry it is late.']
+
 ```
-
-## Citing
-If you use our work in an academic setting, please cite our paper:
-
 
 ## Documentation
 TODO: readthedocs

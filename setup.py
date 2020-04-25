@@ -36,6 +36,7 @@ requirements = [
     "seaborn>=0.10.0",
     "demoji==0.2.1",
     "scipy>=1.4.1",
+    "pyfunctional>=1.3.0",
 ]
 
 extra_requirements = {
