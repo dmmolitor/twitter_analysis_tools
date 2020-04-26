@@ -37,6 +37,7 @@ requirements = [
     "demoji==0.2.1",
     "scipy>=1.4.1",
     "pyfunctional>=1.3.0",
+    "lazy-property>=0.0.1",
 ]
 
 extra_requirements = {
