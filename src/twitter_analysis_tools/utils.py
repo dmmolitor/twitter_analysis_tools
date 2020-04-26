@@ -5,7 +5,6 @@ from functools import wraps
 
 import numpy as np
 
-# flake8: noqa: F401
 if sys.version_info >= (3, 8):
     from functools import cached_property
 else:
