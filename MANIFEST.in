@@ -4,6 +4,7 @@ include *.yaml
 include *.txt
 include .editorconfig
 include .isort.cfg
+include *.gz
 
 # Tests
 include tox.ini
@@ -15,6 +16,7 @@ recursive-include docs *.png
 recursive-include docs *.svg
 recursive-include docs *.py
 recursive-include docs *.rst
+recursive-include tests *.gz
 include docs/Makefile docs/make.bat
 prune docs/_build
 

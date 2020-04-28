@@ -33,7 +33,7 @@ def get_bag_of_words_per_file(filepaths, include_retweets, vectorizer):
     return bag_of_words_pipeline
 
 
-def get_tweet_text_pipeline(filepaths, include_retweets):
+def get_tweet_text_pipeline(*filepaths, include_retweets):
     """Form an iterator of bag_of_words for each file in filepaths.
 
     Args:
