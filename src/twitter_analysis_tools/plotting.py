@@ -96,3 +96,43 @@ def plot_data(
         fig.savefig(filepath + ".svg", bbox_inches="tight", transparent=True)
         fig.savefig(filepath + ".png", bbox_inches="tight", transparent=True)
     plt.close()
+
+
+def sliding_average(data, window=10):
+    """Average data over sliding window.
+
+    Args:
+        data (ndarray): data to average with dimensions: msrmts x num_samples.
+        window (int): size of the sliding window to average over.
+
+    Example:
+    >>> import numpy as np
+    >>> data = np.arange(24).reshape((4,6))
+    >>> sliding_average(data, window=5)
+    array([[ 2.,  3.],
+           [ 8.,  9.],
+           [14., 15.],
+           [20., 21.]])
+
+    An exception is raised if there is insufficient data to average over.
+    >>> import numpy as np
+    >>> data = np.arange(24).reshape((4,6))
+    >>> sliding_average(data, window=10)
+    Traceback (most recent call last):
+    ...
+    Exception: Not enough data to average over with window of size 10.
+    """
+    if data.shape[1] < window:
+        raise Exception(
+            "Not enough data to average over with window of size {}.".format(window)
+        )
+
+    # Make a copy to store averaged data (We could alternatively do this in place).
+    averaged = np.zeros((data.shape[0], data.shape[1] - window + 1))
+
+    # Average over sliding window.
+    for i in range(averaged.shape[1]):
+        # flake8: noqa: E203
+        averaged[:, i] = np.mean(data[:, i : i + window], axis=1)
+
+    return averaged
