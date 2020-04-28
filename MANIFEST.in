@@ -4,6 +4,7 @@ include *.yaml
 include *.txt
 include .editorconfig
 include .isort.cfg
+include *.gz
 
 # Tests
 include tox.ini
