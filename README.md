@@ -94,8 +94,7 @@ Given a generator `tweets` of tweets, the following will return a generator that
 
 One can also get a pipeline of tweet text from a list of filepaths
 ```python
->>> include_retweets = True
->>> list(common_pipelines.get_tweet_text_pipeline(filepaths, include_retweets))
+>>> list(common_pipelines.get_tweet_text_pipeline(*filepaths, include_retweets=True))
 ['Hello my friend, how are you?', 'My dog ate my homework. Sorry it is late.']
 
 ```
